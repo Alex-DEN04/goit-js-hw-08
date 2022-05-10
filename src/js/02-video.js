@@ -16,5 +16,7 @@ function onTimeUpdate(event) {
 
 function populeteForm() { 
     const seconds = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (seconds) {
         player.setCurrentTime(seconds);
+    }
 }

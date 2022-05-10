@@ -5,12 +5,12 @@ const refs = {
 }
 
 const STORAGE_KEY = "feedback-form-state";
-const feedback = {};
-
-populeteForm();
+let feedback = {};
 
 refs.form.addEventListener('submit', onFormSabmit);
 refs.form.addEventListener('input', throttle(onFormInput, 500));
+populeteForm();
+
 
 function onFormInput(event) { 
     feedback[event.target.name] = event.target.value;
@@ -19,16 +19,22 @@ function onFormInput(event) {
 
 function onFormSabmit(event) { 
     event.preventDefault();
-    event.currentTarget.reset();
-    localStorage.removeItem(STORAGE_KEY);
-    console.log(feedback);
+        event.currentTarget.reset();
+        localStorage.removeItem(STORAGE_KEY);
+        console.log(feedback);
 }
 
-function populeteForm() { 
-    const savedFeedback = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    
-    if (savedFeedback) { 
-        refs.form.elements.message.value = savedFeedback.message;
-        refs.form.elements.email.value = savedFeedback.email;
+function populeteForm() {
+    let savedJson = localStorage.getItem(STORAGE_KEY);
+
+    if (savedJson) {
+        let savedMessage = JSON.parse(savedJson);
+        if (savedMessage.email) {
+            refs.form.email.value = savedMessage.email;
+        }
+        if (savedMessage.message) {
+            refs.form.message.value = savedMessage.message;
+        }
+        feedback = savedMessage;
     }
 }
