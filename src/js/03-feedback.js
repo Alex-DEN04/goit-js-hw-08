@@ -18,10 +18,14 @@ function onFormInput(event) {
 }
 
 function onFormSabmit(event) { 
+    if (refs.form.email.value === "" || refs.form.message.value === "") {
+        alert("Please fill in all the fields!");
+        return;
+    };
     event.preventDefault();
-        event.currentTarget.reset();
-        localStorage.removeItem(STORAGE_KEY);
-        console.log(feedback);
+    event.currentTarget.reset();
+    localStorage.removeItem(STORAGE_KEY);
+    console.log(feedback);  
 }
 
 function populeteForm() {
